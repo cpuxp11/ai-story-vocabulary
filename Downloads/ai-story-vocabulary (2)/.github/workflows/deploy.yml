@@ -7,28 +7,27 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Downloads/ai-story-vocabulary (2)
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
 
     - name: Install dependencies
-      run: |
-        cd "Downloads/ai-story-vocabulary (2)/"
-        npm install
+      run: npm install
 
     - name: Build
-      run: |
-        cd "Downloads/ai-story-vocabulary (2)/"
-        npm run build
+      run: npm run build
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: "Downloads/ai-story-vocabulary (2)/dist"
+        publish_dir: Downloads/ai-story-vocabulary (2)/dist
