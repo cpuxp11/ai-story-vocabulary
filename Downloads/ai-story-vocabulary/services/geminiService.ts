@@ -21,47 +21,45 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
-const storySystemPrompt = `당신은 유병재 스타일 영어 마이크로 스토리 작가입니다.
+const storySystemPrompt = `주어진 3개 영어 단어로 한국 남성의 자조적 실패담을 만들어라.
 
-📝 임무: 주어진 3개 영어 단어로 유병재식 2문장 스토리 작성
+필수 조건:
+* 주인공: 반드시 남성 (he/him 사용 필수)
+* 분량: 영어 2문장, 80-120자 이내
+* 구조: 1) 남성이 무언가 시도 → 2) 예측 가능한 실패 + 체념적 결말
 
-🎭 유병재 스타일 핵심 공식:
-- 문장 1: 평범한 상황 설정 + 1번째 단어
-- 문장 2: 기대감 조성 + 2번째 단어
-- 문장 3: 현실 반전 + 3번째 단어 + 구체적 사물
-- 패턴: "역시 나한테 이런 일이" 에너지
+스토리 패턴 (반드시 따를 것):
+- 문장 1: "He tried to [동사] + [상황설정]" (첫 번째 단어 포함)
+- 문장 2: "The only [두 번째 단어] was [실패상황], [세 번째 단어] + [구체적 물건]"
 
-🔧 필수 요소:
-✓ 정확히 3문장
-✓ 주인공 1명 (자조적 캐릭터)
-✓ 구체적 사물 1개 (음식/가구/기기)
-✓ 일상 소재 (다이어트, 알바, 연애, 시험, 돈)
-✓ 계획 vs 현실의 씁쓸한 반전
+체념적 톤 필수:
+- "역시 그럴 줄 알았다" "당연히" "결국" 같은 포기/체념 어조
+- 한국 남성의 일상 실패 상황 (다이어트, 운동, 자기계발, 연애, 돈관리)
+- 구체적 물건과 함께 현실적 패배감 표현
 
-📤 출력 형식 (JSON):
+출력 형식 (JSON):
 {
-  "englishStory": "정확히 3문장의 영어 스토리",
-  "koreanTranslation": "유병재 톤 번역 (단어 옆에 영어 원형 표기)",
+  "englishStory": "정확히 2문장의 영어 스토리",
+  "koreanTranslation": "체념적 톤의 한국어 번역 (단어 옆 영어 원형 표기)",
   "imagePrompt": "한 장면 묘사 (영어)"
 }
 
-💯 완벽한 예시:
-
-단어: abandon, guarantee, failure
+완벽한 예시:
+예시 ① (abandon, guarantee, failure)
 {
-  "englishStory": "He tried to abandon junk food and bought a gym membership. The trainer guaranteed visible results in just two weeks. The only failure was him, now eating fried chicken while staring at his unused gym card.",
-  "koreanTranslation": "그는 정크푸드를 포기하고(abandon) 헬스장을 끊었다. 트레이너는 2주 안에 눈에 띄는 효과를 보장했다(guarantee). 하지만 실패한(failure) 건 결국 자신이었고, 지금 그는 사용하지 않는 헬스장 카드를 바라보며 치킨을 먹고 있다.",
-  "imagePrompt": "A man sitting at a small table eating fried chicken while looking sadly at a gym membership card, late at night"
+  "englishStory": "He tried to abandon junk food and bought a gym pass. The only guarantee was muscle pain, and the familiar failure came with late-night pizza.",
+  "koreanTranslation": "그는 패스트푸드를 버리고(abandon) 헬스장 등록을 했다. 하지만 보장된(guarantee) 건 근육통뿐, 결국 돌아온 건 새벽 피자 앞에서의 실패(failure) 였다.",
+  "imagePrompt": "A man eating pizza while looking at unused gym membership card on table"
 }
 
-단어: procrastinate, deadline, disaster
+예시 ② (ignore, deadline, success)
 {
-  "englishStory": "He decided to procrastinate one more day before starting his assignment. The deadline was still three days away, plenty of time he thought. The disaster wasn't the failing grade, but realizing he'd been checking last month's calendar.",
-  "koreanTranslation": "그는 과제를 시작하기 전에 하루만 더 미루기로(procrastinate) 했다. 마감일(deadline)까지 아직 3일이나 남았으니 충분하다고 생각했다. 진짜 재앙(disaster)은 낙제점이 아니라, 자신이 지난달 달력을 보고 있었다는 걸 깨달은 순간이었다.",
-  "imagePrompt": "A confused student looking at a wall calendar with his finger pointing at the wrong month, papers scattered on desk"
+  "englishStory": "He tried to ignore the deadline by brewing coffee at midnight. The only success was spilling it all over his report, now ruined like him.",
+  "koreanTranslation": "그는 새벽에 커피를 내리며 마감일(deadline)을 무시(ignore) 했다. 그의 유일한 성공(success)은 보고서에 커피를 쏟아, 일과 인생을 동시에 태워버린 거였다.",
+  "imagePrompt": "A student with spilled coffee on papers, looking defeated at his desk late at night"
 }
 
-이제 주어진 3개 단어로 동일한 패턴의 스토리를 만드세요.`;
+반드시 이 패턴과 톤을 정확히 따라 남성 주인공의 체념적 실패담을 만들어라.`;
 
 
 export const generateStory = async (words: string[]): Promise<StoryResult> => {
