@@ -9,12 +9,13 @@ interface StoryDisplayProps {
   imageUrl: string | null;
 }
 
-const HighlightedKoreanText: React.FC<{ text: string }> = ({ text }) => {
-    const parts = text.split(/(\([a-zA-Z]+\))/g);
+const HighlightedText: React.FC<{ text: string }> = ({ text }) => {
+    // 영어 단어 찾기 (대소문자 포함)
+    const parts = text.split(/([a-zA-Z]+)/g);
     return (
       <p className="text-slate-600 leading-relaxed text-center text-base sm:text-lg">
         {parts.map((part, index) => {
-          if (part.match(/(\([a-zA-Z]+\))/g)) {
+          if (part.match(/^[a-zA-Z]+$/)) {
             return (
               <span key={index} className="font-bold text-teal-600">
                 {part}
@@ -45,13 +46,13 @@ const StoryDisplay: React.FC<StoryDisplayProps> = ({ words, storyResult, imageUr
       </div>
 
       <div className="w-full space-y-6">
-        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-            <p className="text-slate-800 font-semibold text-center text-base sm:text-lg">
-                "{storyResult.englishStory}"
-            </p>
-        </div>
         <div className="p-4">
-            <HighlightedKoreanText text={storyResult.koreanTranslation} />
+            <HighlightedText text={storyResult.koreanStory} />
+        </div>
+        <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+            <p className="text-slate-600 text-center text-sm sm:text-base italic">
+                "{storyResult.englishTranslation}"
+            </p>
         </div>
       </div>
     </div>

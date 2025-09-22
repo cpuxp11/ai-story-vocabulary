@@ -4,6 +4,8 @@
 
 # Run and deploy your AI Studio app
 
+[➡️ 제품 요구사항 문서(PRD) 보러가기](./PRD.md)
+
 This contains everything you need to run your app locally.
 
 View your app in AI Studio: https://ai.studio/apps/drive/1HKk709-f6uYUbWu5zfEUrxY-ioyZiIrC

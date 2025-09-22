@@ -5,7 +5,7 @@ export interface Word {
 }
 
 export interface StoryResult {
-  englishStory: string;
-  koreanTranslation: string;
+  koreanStory: string;
+  englishTranslation: string;
   imagePrompt: string;
 }
