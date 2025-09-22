@@ -7,9 +7,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: Downloads/ai-story-vocabulary (2)
 
     steps:
     - name: Checkout
@@ -20,11 +17,23 @@ jobs:
       with:
         node-version: '20'
 
+    - name: List files
+      run: ls -la
+
+    - name: List Downloads
+      run: ls -la Downloads/
+
     - name: Install dependencies
-      run: npm install
+      run: |
+        cd Downloads/
+        cd ai-story-vocabulary\ \(2\)
+        npm install
 
     - name: Build
-      run: npm run build
+      run: |
+        cd Downloads/
+        cd ai-story-vocabulary\ \(2\)
+        npm run build
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
