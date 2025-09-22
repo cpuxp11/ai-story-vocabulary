@@ -19,16 +19,16 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd Downloads/ai-story-vocabulary\ \(2\)/
+        cd "Downloads/ai-story-vocabulary (2)/"
         npm install
 
     - name: Build
       run: |
-        cd Downloads/ai-story-vocabulary\ \(2\)/
+        cd "Downloads/ai-story-vocabulary (2)/"
         npm run build
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: Downloads/ai-story-vocabulary\ \(2\)/dist
+        publish_dir: "Downloads/ai-story-vocabulary (2)/dist"
